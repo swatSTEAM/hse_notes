@@ -1,0 +1,227 @@
+
+\documentclass[a4paper,12pt]{article} % добавить leqno в [] для нумерации слева
+\usepackage[top=2 cm, bottom=2cm, left=3cm, right=1.5cm]{geometry}
+%%% Работа с русским языком
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+%%% Дополнительная работа с математикой
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+%% Номера формул
+%\mathtoolsset{showonlyrefs=true} % Показывать номера только у тех формул, на которые есть \eqref{} в тексте.
+
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+%% Свои команды\textbf{}
+\DeclareMathOperator{\sgn}{\mathop{sgn}}
+
+%% Перенос знаков в формулах (по Львовскому)
+\newcommand*{\hm}[1]{#1\nobreak\discretionary{}
+{\hbox{$\mathsurround=0pt #1$}}{}}
+\usepackage{indentfirst}
+% \setlength{\parindent}{1.25cm}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes,arrows}
+% \usepackage{pgfplots}
+% \pgfplotsset{compat=1.9}
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=7em, text centered, rounded corners, minimum height=2em]
+\tikzstyle{block2} = [rectangle, draw, fill=yellow!20, 
+    text width=7em, text centered, rounded corners, minimum height=2em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=4cm,
+    minimum height=2em]
+    
+\begin{document}
+\setcounter{section}{7}
+\section{Лекция 8}
+
+\subsection{Граф}
+
+$G(V,E)$ --- граф, где $V$ --- множество вершин, $E$ --- множество ребер.
+
+\subsection{Маршрут}
+
+Маршрут длинны $k$:
+$$ v_0 e_1 v_1 e_2 v_2 \dots v_{k-1} e_k v_k $$
+
+Замечания:
+\begin{enumerate}
+\item Если граф простой, то из маршрута можно отбросить рёбера $e$.
+\item Маршрут длинны 0 --- вершина.
+\end{enumerate}
+
+\subsection{Замкнутый маршрут}
+
+Маршрут называется замкнутым, если начальная и конечная вершины совпадают.
+
+\subsection{Цепь}
+Незамкнутый маршрут называется цепью, если рёбра попарно различны.
+
+\subsection{Простая цепь}
+Цепь, где вершины не повторяются называется простой.
+
+\subsection{Цикл}
+Замкнутый маршрут называется циклом, если нет повторяющихся рёбер.
+
+\subsection{Простой цикл}
+
+Цикл называется простым, если нет повторяющихся вершин.
+
+\begin{center}
+\begin{tikzpicture}[node distance = 2cm, auto]
+    % Place nodes
+    % \node [block] (init) {initialize model};
+    \node [cloud] (marsh) {Маршрут};
+    \node [below of=marsh] (empt) {};
+    \node [block, left of=empt] (zam) {Замкнутый};
+    \node [block, below of=zam] (loop) {Цикл};
+    \node [block, below of=loop] (easy) {Простой цикл};
+    \node [block2, right of=empt] (nezam) {Незамкнутый};
+    \node [block2, below of=nezam] (cep) {Цепь};
+    \node [block2, below of=cep] (easy2) {Простая цепь};
+    \path [line] (marsh) -| (zam);
+    \path [line] (marsh) -| (nezam);
+    \path [line] (zam) -- (loop);
+    \path [line] (loop) -- (easy);
+    \path [line] (nezam) -- (cep);
+    \path [line] (cep) -- (easy2);
+\end{tikzpicture}
+\end{center}
+\subsection{Регулярный граф}
+Граф $G = (V,E)$ -- регулярный, если степени вершин равны $$ \forall v \in V: \deg{v} = e$$
+
+\subsection{Расстояние}
+
+Расстояние $d(u,v)$ --- кратчайший маршрут от $u$ до $v$.
+
+\subsection{Диаметр}
+
+Диаметр графа --- расстояние между самыми удалёнными вершинами.
+
+\subsection{Подграф}
+
+Подграф $G' = (V',E')$ состоит из части вершин ($V' \subset V$) и рёбер ($E' 
+\subset E$) графа $G = (V,E)$
+
+\subsection{Дополнительный граф}
+
+$G = G(V,E)$ --- простой граф, граф $\bar{G} = (V,\bar{E})$ --- дополнительный, если
+$$ \{u,v\} \in E \Leftrightarrow \{u,v\} \in \bar{E}$$
+
+\definecolor{uququq}{rgb}{0.25098039215686274,0.25098039215686274,0.25098039215686274}
+\begin{center}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=0.35cm,y=0.35cm]
+\clip(0.,0.) rectangle (16.,12.);
+\draw [line width=2.pt,,color=uququq] (0.7597143250020792,10.757406692951177)-- (0.7597143250020792,6.757406692951177);
+\draw [line width=2.pt,,color=uququq] (4.759714325002079,10.757406692951177)-- (4.759714325002079,6.757406692951177);
+\draw [line width=2.pt,,color=uququq] (0.7597143250020792,10.757406692951177)-- (4.759714325002079,6.757406692951177);
+\draw [line width=2.pt,,color=uququq] (0.7597143250020792,6.757406692951177)-- (4.759714325002079,10.757406692951177);
+\draw [line width=2.pt,,color=uququq] (0.7597143250020792,4.757406692951177)-- (4.759714325002079,4.757406692951177);
+\draw [line width=2.pt,,color=uququq] (0.7597143250020792,0.7574066929511769)-- (4.759714325002079,0.7574066929511769);
+\draw [line width=2.pt,,color=uququq] (8.75971432500208,10.757406692951177)-- (8.75971432500208,6.757406692951177);
+\draw [line width=2.pt,,color=uququq] (12.75971432500208,10.757406692951177)-- (12.75971432500208,6.757406692951177);
+\draw [line width=2.pt,,color=uququq] (8.75971432500208,10.757406692951177)-- (12.75971432500208,6.757406692951177);
+\draw [line width=2.pt,,color=uququq] (8.75971432500208,6.757406692951177)-- (12.75971432500208,10.757406692951177);
+\draw [line width=2.pt,,color=uququq] (8.75971432500208,6.757406692951177)-- (12.75971432500208,6.757406692951177);
+\draw [line width=2.pt,,color=uququq] (8.75971432500208,10.757406692951177)-- (12.75971432500208,10.757406692951177);
+\draw (5.389263418251354,9.85939059511299) node[anchor=north west] {$K_{2,2}$};
+\draw (5.340554895000522,4.01436780501313) node[anchor=north west] {$\bar{K}_{2,2}$};
+\draw (13.280044184886188,9.85939059511299) node[anchor=north west] {$N_{2,2}$};
+\draw (13.231335661635356,3.8682422352606336) node[anchor=north west] {$\bar{N}_{2,2}$};
+\begin{scriptsize}
+\draw [fill=uququq] (0.7597143250020792,10.757406692951177) circle (4.5pt);
+\draw [fill=uququq] (0.7597143250020792,6.757406692951177) circle (4.5pt);
+\draw [fill=uququq] (4.759714325002079,10.757406692951177) circle (4.5pt);
+\draw [fill=uququq] (4.759714325002079,6.757406692951177) circle (4.5pt);
+\draw [fill=uququq] (0.7597143250020792,4.757406692951177) circle (4.5pt);
+\draw [fill=uququq] (0.7597143250020792,0.7574066929511769) circle (4.5pt);
+\draw [fill=uququq] (4.759714325002079,4.757406692951177) circle (4.5pt);
+\draw [fill=uququq] (4.759714325002079,0.7574066929511769) circle (4.5pt);
+\draw [fill=uququq] (8.75971432500208,10.757406692951177) circle (4.5pt);
+\draw [fill=uququq] (8.75971432500208,6.757406692951177) circle (4.5pt);
+\draw [fill=uququq] (12.75971432500208,10.757406692951177) circle (4.5pt);
+\draw [fill=uququq] (12.75971432500208,6.757406692951177) circle (4.5pt);
+\draw [fill=uququq] (8.75971432500208,4.757406692951177) circle (4.5pt);
+\draw [fill=uququq] (8.75971432500208,0.7574066929511769) circle (4.5pt);
+\draw [fill=uququq] (12.75971432500208,4.757406692951177) circle (4.5pt);
+\draw [fill=uququq] (12.75971432500208,0.7574066929511769) circle (4.5pt);
+\end{scriptsize}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Связный граф}
+Граф $G=(V,E)$ называется связным, если любые две вершины соединеный маршрутом.
+
+\subsection{Компонент связности}
+$G=(V,E)$ -- компонент связности, если он является макимальным по включению связным подграфом.
+
+\subsection{Мост}
+$e \in E$ -- мост (перешеек), если после его удаления количество компонентов связности в исходном графе увеличивается.
+
+\subsection{Разделяющая точка}
+$v \subset V$ -- разделяющая точка, если удаление этой точки приводит к увеличению компонентов связности в исходном графе.
+
+\subsection{Изоморфизм графа}
+$G_1=(V_1,E_1),\ G_2=(V_2,E_2)$ -- простые.
+
+$G_1 \cong G_2$ -- изоморфны, если существует взаимосвязь: $\exists \varphi:V_1 \rightarrow V_2$, такая что: $$\{u,v\}\in E_1 \Leftrightarrow \{\varphi(u),\varphi(v)\}\in E_2$$
+\begin{center}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=0.35cm,y=0.35cm]
+\clip(0.,0.) rectangle (27.5,22.);
+\draw [line width=2.pt,,color=uququq] (6.246897664223317,16.35945821084448)-- (1.246897664223317,11.359458210844474);
+\draw [line width=2.pt,,color=uququq] (6.246897664223317,16.35945821084448)-- (11.246897664223317,11.359458210844474);
+\draw [line width=2.pt,,color=uququq] (1.246897664223317,1.3594582108444744)-- (6.246897664223317,6.359458210844474);
+\draw [line width=2.pt,,color=uququq] (1.246897664223317,11.359458210844474)-- (11.246897664223317,11.359458210844474);
+\draw [line width=2.pt,,color=uququq] (6.246897664223317,6.359458210844474)-- (11.246897664223317,11.359458210844474);
+\draw (6.471646426115806,21.877100178321726) node[anchor=north west] {$G_1$};
+\draw [line width=2.pt,,color=uququq] (16.24689766422332,11.359458210844474)-- (16.24689766422332,16.35945821084448);
+\draw [line width=2.pt,,color=uququq] (16.24689766422332,11.359458210844474)-- (21.24689766422332,11.359458210844474);
+\draw [line width=2.pt,,color=uququq] (26.24689766422332,1.3594582108444744)-- (21.24689766422332,6.359458210844474);
+\draw [line width=2.pt,,color=uququq] (16.24689766422332,16.35945821084448)-- (21.24689766422332,11.359458210844474);
+\draw [line width=2.pt,,color=uququq] (21.24689766422332,6.359458210844474)-- (21.24689766422332,11.359458210844474);
+\draw (16.445272429758074,21.877100178321726) node[anchor=north west] {$G_2$};
+\begin{scriptsize}
+\draw [fill=uququq] (6.246897664223317,16.35945821084448) circle (4.5pt);
+\draw[color=uququq] (7.1365548263586245,18.129434649680405) node {$u_2$};
+\draw [fill=uququq] (1.246897664223317,11.359458210844474) circle (4.5pt);
+\draw[color=uququq] (2.179964933639437,13.11239853875735) node {$u_1$};
+\draw [fill=uququq] (11.246897664223317,11.359458210844474) circle (4.5pt);
+\draw[color=uququq] (12.153590937281704,13.11239853875735) node {$u_3$};
+\draw [fill=uququq] (1.246897664223317,1.3594582108444744) circle (4.5pt);
+\draw[color=uququq] (2.179964933639437,3.13877253511513) node {$u_5$};
+\draw [fill=uququq] (6.246897664223317,6.359458210844474) circle (4.5pt);
+\draw[color=uququq] (7.1365548263586245,8.095362427834294) node {$u_4$};
+\draw [fill=uququq] (16.24689766422332,11.359458210844474) circle (4.5pt);
+\draw[color=uququq] (17.170627048204786,13.11239853875735) node {$v_2$};
+\draw [fill=uququq] (16.24689766422332,16.35945821084448) circle (4.5pt);
+\draw[color=uququq] (17.170627048204786,18.129434649680405) node {$v_1$};
+\draw [fill=uququq] (21.24689766422332,11.359458210844474) circle (4.5pt);
+\draw[color=uququq] (22.127216940923972,13.11239853875735) node {$v_3$};
+\draw [fill=uququq] (26.24689766422332,1.3594582108444744) circle (4.5pt);
+\draw[color=uququq] (27.144253051847052,3.13877253511513) node {$v_5$};
+\draw [fill=uququq] (21.24689766422332,6.359458210844474) circle (4.5pt);
+\draw[color=uququq] (22.127216940923972,8.095362427834294) node {$v_4$};
+\end{scriptsize}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Необходимые признаки изоморфности:}
+$G_1 \cong G_2$:
+\begin{enumerate}
+\item $|V_1| = |V_2|$
+\item $|E_1| = |E_2|$
+\item Набор степеней вершин одинаков.
+\end{enumerate}
+\end{document}
