@@ -1,0 +1,201 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage{hyphenat}
+\hyphenation{мате-мати-ка восста-навливать}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage[bottom]{footmisc} % сноски всегда внизу
+\usepackage{indentfirst} % отступ параграфа
+\parindent=1cm
+
+%%% Дополнительная работа с математикой
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{soul}   % Поддержка переносоустойчивых подчёркиваний и зачёркиваний
+\usepackage{icomma} % Запятая в десятичных дробях
+
+%% Номера формул
+%\mathtoolsset{showonlyrefs=true} % Показывать номера только у тех формул, на которые есть \eqref{} в тексте.
+
+%% Перенос знаков в формулах (по Львовскому)
+\newcommand*{\hm}[1]{#1\nobreak\discretionary{}
+    {\hbox{$\mathsurround=0pt #1$}}{}}
+
+\usepackage{array,tabularx,tabulary,booktabs} % Дополнительная работа с таблицами
+\usepackage{longtable} % Длинные таблицы
+\usepackage{multirow,makecell,array} % Улучшенное форматирование таблиц
+
+% Содержание с точками
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\l@section}
+{\hfil}
+{\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill}
+{}{}
+
+\bibliographystyle{utf8gost71u} % Оформляем библиографию по ГОСТ 7.1 (ГОСТ Р 7.0.11-2011, 5.6.7)
+\renewcommand{\@biblabel}[1]{#1.} % Заменяем библиографию с квадратных скобок на точку
+\makeatother
+
+\usepackage{graphicx} % Для вставки рисунков
+\graphicspath{{images/}} % Пути к изображениям
+\setlength\fboxsep{3pt} % Отступ рамки \fbox{} от рисунка
+\setlength\fboxrule{1pt} % Толщина линий рамки \fbox{}
+\usepackage{wrapfig} % Обтекание рисунков текстом
+
+
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames,svgnames,table,rgb]{xcolor}
+\hypersetup{ % Гиперссылки
+    unicode=true, % русские буквы в раздела PDF
+    pdftitle={Заголовок}, % Заголовок
+    pdfauthor={Автор}, % Автор
+    pdfsubject={Тема}, % Тема
+    pdfcreator={Создатель}, % Создатель
+    pdfproducer={Производитель}, % Производитель
+    pdfkeywords={keyword1} {key2} {key3}, % Ключевые слова
+    colorlinks=true, % false: ссылки в рамках; true: цветные ссылки
+    linkcolor=black, % внутренние ссылки
+    citecolor=black, % на библиографию
+    filecolor=magenta, % на файлы
+    urlcolor=cyan % на URL
+}
+
+\usepackage{tikz}
+
+\begin{document}
+    \tableofcontents
+    \clearpage
+    \section{Лекция 1}
+    \subsection{Примеры рядов}
+    Числовой ряд:
+    \begin{equation}
+        \sum_{n=1}^{\infty} a_n = \lim_{n \to \infty} S_n, \text{ где } S_n = a_1 + a_2 + \cdots + a_n.
+    \end{equation}
+
+    Ряд Тейлора:
+    \begin{equation}
+        f(x_0) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n, \text{ при } x_0 \in \mathbb{R} \text{ и } f \in c^{\infty}(O_h(x_0)).
+    \end{equation}
+
+    \subsection{Ряды Фурье}
+    Другое представление сложных функций через простые - ряды Фурье.
+
+    Если f(x) - $2\pi$-периодическая функция на $\mathbb{R}$, тогда $f(x) = a_0 + \sum_{n=1}^{\infty} a_ncos(nx) +~b_nsin(nx),$ где $a_0$, $a_n$, $b_n$ - коэффициенты Фурье, зависящие от функции $f(x)$.
+
+    Этот ряд применяется к изучению периодических (колебательных) повторяющихся процессов в природе. Например, сигналы (звуковые, радио, теле), переменный электроток, а также в теории дифференциальных уравнений.
+
+    \subsection{Гармонические колебания}
+    Уравнение гармонических колебаний:
+    \begin{equation}\label{eq:garmonickoleb}
+        f(t) = Asin(\omega t + \varphi),
+    \end{equation}
+    где $t$ - время, $A > 0$ - амплитуда колебаний, $\omega$ - круговая частота, $T = \frac{2\pi}{\omega}$ - период, $\varphi$ - начальная фаза.
+
+    \setlength\intextsep{-9pt}
+    \begin{wrapfigure}[6]{r}[20pt]{0cm}
+        \begin{tikzpicture}
+        \draw (0,0) circle [radius=1.5];
+        \draw (0.3,0.3) to [out=0,in=90] (0.5, 0);
+        \node at (0.65, 0.25) {$\varphi$};
+        \draw[->] (-2,0) -- (2,0) node [right] {$x$};
+        \draw[->] (0,-2) -- (0,2) node [above] {$y$};
+        \draw[] (0,0) -- (1.06,1.06);
+        \draw[dotted] (1.06,1.06) -- (0,1.06) node [red, xshift=-0.15cm] {$a$};
+        \draw[red, very thick] (1.06,1.06) -- (1.06,0);
+        \draw[blue, very thick] (0,0) -- (1.06,0) node [blue, yshift=-0.2cm] {$b$};
+        \end{tikzpicture}
+    \end{wrapfigure}
+
+    Так-как $sin\varphi = \frac{a}{\sqrt{a^2 + b^2}}$ и $cos\varphi = \frac{b}{\sqrt{a^2 + b^2}}$, тогда уравнение (\ref{eq:garmonickoleb}) можно переписать так:
+    \begin{equation*}
+    \begin{aligned}
+        f(t) &= Asin(\omega t + \varphi) = Asin(\varphi)cos(\omega t) + Acos(\varphi)sin(\omega t) =\\
+        &= \sqrt{a^2 + b^2}\left(\frac{a}{\sqrt{a^2 + b^2}}cos(\omega t) + \frac{b}{\sqrt{a^2 + b^2}}sin(\omega t)\right), a \neq 0, b \neq 0.
+    \end{aligned}
+    \end{equation*}
+
+    \subsection{Что можно делать с рядами Фурье?}
+    \begin{enumerate}
+        \item Выделить из исходного сигнала его составляющую заданной частоте.
+        \item Выделение сигнала соответствующего диапазона частот.
+    \end{enumerate}
+
+    Замечено, что конечные суммы $\sum_{n=1}^{N} a_n cos(n\omega x) + b_nsin(n\omega x)$ с частотами кратными $\omega$, обладают разнообразными свойствами. Вопрос: можно ли произвольные колебания, с основной частотой $\omega$, представить суммой гармонических колебаний с тем же периодом (не минимальным)? - Можно, если сумма бесконечна и добавлена постоянная составляющая.
+
+    \subsection{Абстрактный аппарат для обоснования ряда Фурье}
+    \subsubsection{Линейное векторное пространство}
+    Линейным векторным пространством $X$ называется множество элементов $x$, на котором определены операции $+$ и $\times$ на числах: $\forall x,y \in X \Rightarrow \alpha x + \beta y: a, b \in \mathbb{R}$.
+    \subsubsection{Аксиомы векторного пространства}
+    \begin{enumerate}
+        \item $\alpha(x + y) = \alpha x + \alpha y$
+        \item $\alpha(\beta x) = (\alpha \beta) x$
+        \item $(\alpha + \beta) x = \alpha x + \beta x x$
+        \item $\exists$ $0 \in X : 0 + x = x$
+    \end{enumerate}
+
+    \subsubsection{Линейная зависимость и независимость векторов}
+    Пусть $X \in \mathbb{R} : X = (x_1, x_2, ..., x_n) \text{, где }x_i \in \mathbb{R}.$ Тогда $x_1, x_2, ... , x_n \in X$ линейно независимы, если:
+    \[\alpha_1 x_1 + \alpha_2 x_2 + ...  + \alpha_n x_n = 0 \Rightarrow \alpha_1 = \alpha_2 =  ...  = \alpha_n = 0.\]
+    Если существует такая линейная комбинация с минимум одним $a_i \neq 0$, тогда $x_1, x_2, ... , x_n \in X$ линейно зависимы.
+
+    \subsubsection{Евклидово векторное пространство}
+    Линейное векторное пространство называется Евклидовым, если в нём задана операция скалярного произведения: $x, y \to (x, y)$ и удовлетворяет аксиомам:
+    \begin{enumerate}
+        \item $(x, y) = (y, x)$
+        \item $(\alpha x + \beta y, z) = \alpha(x, z) + \beta (y, z)$
+        \item $(x, x) \geqslant 0, \text{ причем, если } (x, x) = 0 \Leftrightarrow x = 0$
+        \item Если $x, y \in \mathbb{R}^n : (x, y) = x_1 y_1 + x_2 y_2 + ... + x_n y_n$
+    \end{enumerate}
+
+    \subsubsection{Норма вектора}
+    \[\Vert X \Vert = \sqrt{(x, x)} \Rightarrow \Vert X \Vert \geqslant 0.\]
+
+    Свойства нормы в $X$:
+    \begin{enumerate}
+        \item $\Vert X \Vert = 0 \Leftrightarrow x = 0.$\\
+        Доказательство:\\
+        Так-как $\Vert x \Vert = \sqrt{(x, x)}$, то неравенство следует из скалярного произведения.
+        \item $\Vert \alpha x \Vert = |\alpha| \cdot \Vert X \Vert$ \\
+        Доказательство:\\
+        $\Vert \alpha x \Vert = \sqrt{(\alpha x, \alpha x)} = \sqrt{\alpha^2 (x, x)} = |\alpha| \cdot \Vert x \Vert$.
+        \item $|(x, y)| \leqslant \Vert x \Vert \cdot \Vert y \Vert$ (неравенство Коши-Буняковского)\\
+        Доказательство:\\
+        Возьмем $t \in \mathbb{R}$ и рассмотрим уравнение:
+        \begin{align*}
+            (x-ty, &x - ty) = (x, x) - t(x,y) - t(y, x) + t^2(y, y) = \\
+            &= (x, x) - 2t(x,y) + t^2(y,y) = 0,
+        \end{align*}
+        если $y \neq 0$, то $(y, y) > 0$, тогда $\frac{D}{4} \leqslant 0$:
+        \begin{align*}
+            \frac{D}{4} = (x, y)^2 &- (x, x)(y, y) \leqslant 0;\\
+            (x, y)^2 &\leqslant (x, x)(y, y);\\
+            |(x, y)| &\leqslant \Vert x \Vert \cdot \Vert y \Vert.
+        \end{align*}
+
+        \item $\Vert x + y \Vert \leqslant  \Vert x \Vert + \Vert y \Vert$ (неравенство треугольника).\\
+        Доказательство:
+        \begin{align*}
+            \Vert x + &y \Vert^2 = (x + y, x + y) = (x, x) + 2(x, y) + (y, y) \leqslant \\
+            &\leqslant \Vert x \Vert^2 + \Vert y \Vert^2 + 2\Vert x \Vert \cdot \Vert y \Vert = (\Vert x \Vert + \Vert y \Vert)^2.
+        \end{align*}
+    \end{enumerate}
+
+    Смысл нормы $\Vert x \Vert$ - длина вектора, $\Vert x - y \Vert$ - расстояние.
+
+    Последовательность $X_n \in X$ (в евклидовом пространстве) называется сходящейся \\$\lim_{x \to \infty} X_n = x,$ где $x \in X$, в том смысле, что $\lim_{n \to \infty} \Vert x_n - x \Vert = 0$.
+
+    \subsubsection{Плотное множество}
+    Множество $E \subset X$ (в евклидовом пространстве) плотно, если $\forall x \in X$ $\exists$ $x_1, x_2, ..., x_n \in E : x_n \xrightarrow{n \to \infty} x$.
+
+    \subsubsection{Ортогональная система векторов}
+    Система векторов $x_1, x_2 ..., x_n$ (конечная или бесконечная) называется ортогональной, если $(x_i, x_j) = 0$, при $i \neq j$.
+
+    \subsubsection{Ортонормированная система векторов}
+    Система векторов $x_1, x_2 ..., x_n$ (конечная или бесконечная) называется ортонормированной, если она ортогональна и $\Vert x_j \Vert = 1$.
+
+    Обозначим $C_2 [-\pi; \pi]$ множество функций, определенных на отрезке $[-\pi; \pi]$, таких что функция $f$ непрерывна на этом отрезке, кроме, быть может, конечного числа точек (разрыв типа <<скачок>>). Значения в точках разрыва и в точках $-\pi$, $\pi$ на функцию не влияют, т.е. функция и $C_2 [-\pi; \pi]$ различны в конечном числе точек - отождествляются.
+\end{document}
