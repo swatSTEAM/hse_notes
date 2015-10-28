@@ -18,6 +18,10 @@
 %% Шрифты
 \usepackage{euscript}	 % Шрифт Евклид
 \usepackage{mathrsfs} % Красивый матшрифт
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{Вдовкин В.А.}
+\rhead{БИВ-141}
 
 %% Свои команды\textbf{}
 \DeclareMathOperator{\sgn}{\mathop{sgn}}
@@ -118,7 +122,7 @@ $$ v_0 e_1 v_1 e_2 v_2 \dots v_{k-1} e_k v_k $$
 \subsection{Дополнительный граф}
 
 $G = G(V,E)$ --- простой граф, граф $\bar{G} = (V,\bar{E})$ --- дополнительный, если
-$$ \{u,v\} \in E \Leftrightarrow \{u,v\} \in \bar{E}$$
+$$ \{u,v\} \in E \Leftrightarrow \{u,v\} \notin \bar{E}$$
 
 \definecolor{uququq}{rgb}{0.25098039215686274,0.25098039215686274,0.25098039215686274}
 \begin{center}
