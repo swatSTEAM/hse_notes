@@ -1,6 +1,6 @@
 
 \documentclass[a4paper,12pt]{article} % добавить leqno в [] для нумерации слева
-\usepackage[top=2 cm, bottom=2cm, left=3cm, right=1.5cm]{geometry}
+\usepackage[top=2 cm, bottom=2cm, left=2cm, right=2cm]{geometry}
 %%% Работа с русским языком
 \usepackage{cmap}					% поиск в PDF
 \usepackage{mathtext} 				% русские буквы в формулах
@@ -20,7 +20,7 @@
 \usepackage{mathrsfs} % Красивый матшрифт
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\lhead{Вдовкин В.А.}
+\lhead{Вдовкин В.А., Юткин Д.И.}
 \rhead{БИВ-141}
 
 %% Свои команды\textbf{}
@@ -31,7 +31,20 @@
 {\hbox{$\mathsurround=0pt #1$}}{}}
 \usepackage{indentfirst}
 % \setlength{\parindent}{1.25cm}
+
+
+
 \usepackage{tikz}
+\usepackage{tkz-graph}
+\usetikzlibrary{decorations.pathreplacing}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{multicol}
+
+
+
+
 \usepackage{mathrsfs}
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes,arrows}
@@ -46,14 +59,189 @@
 \tikzstyle{line} = [draw, -latex']
 \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=4cm,
     minimum height=2em]
-    
+
+\usepackage{hyperref}
+
+\hypersetup{ % Гиперссылки
+    unicode=true, % русские буквы в раздела PDF
+    pdftitle={Заголовок}, % Заголовок
+    pdfauthor={Автор}, % Автор
+    pdfsubject={Тема}, % Тема
+    pdfcreator={Создатель}, % Создатель
+    pdfproducer={Производитель}, % Производитель
+    pdfkeywords={keyword1} {key2} {key3}, % Ключевые слова
+    colorlinks,
+    linkcolor={black},
+    citecolor={black},
+    urlcolor={black}
+}
+
 \begin{document}
-\setcounter{section}{7}
+\tableofcontents
+\clearpage
+
+\setcounter{section}{6}
+\section{Лекция 7}
+    \subsection{Граф}
+    Графом $G = (V, E)$ называется пара конечных множеств $V$ и $E$, где:
+    \begin{align*}
+        V &= \{v_1, v_2, ..., v_n\} \text{ --- множество вершин, } |V| = n,\\
+        E &= \{e_1, e_2, ..., e_m\} \text{ --- множество рёбер, } |E| = m.
+    \end{align*}
+    
+    Если $e \in E \Rightarrow e =\{ v_i, v_j \}$ - неупорядоченная пара.
+    
+    \subsubsection{Пример задания графа диаграмой}
+    \begin{center}
+        $G = (V, E)$, где $V = \{v_1, v_2, v_3\}$; $E = \big\{ \{v_1, v_2\}, \{v_1, v_3\}, \{v_2, v_2\}, \{v_2, v_2\}, \{v_1, v_3\} \big\}$.
+        
+        \begin{tikzpicture}
+            \SetGraphUnit{1}
+            \Vertex[Math] {v_1}
+            \Vertex[Math, x=3,y=0]{v_2}
+            \Vertex[Math, x=1.5,y=-1.5]{v_3}
+            \Edge[style={-}	](v_1)(v_2)
+            \Edge[style={-}](v_1)(v_3)
+            \Loop[dist=0.8cm,dir=SO,style={-}](v_2)
+            \Loop[dist=1.5cm,dir=EA,style={-}](v_2)
+            \tikzset{EdgeStyle/.style = {-,bend left}}
+            \Edge(v_1)(v_3)
+        \end{tikzpicture}
+
+    \end{center}
+    
+    \subsection{Инцидентность}
+    Инцидентность --- понятие, используемое только в отношении ребра и вершины: если $v_1$, $v_2$ --- вершины, а $e=\{v_1,v_2\}$ --- соединяющее их ребро,
+    тогда вершина $v_1$ и ребро e инцидентны, вершина $v_2$ и ребро $e$ тоже инцидентны. Две вершины (или два ребра) инцидентными быть не могут.
+    
+    \subsection{Петля}
+    Петля в графе --- ребро, инцидентное одной и той же вершине (ребро, у которого вершины одинаковые).
+    
+    \subsection{Кратные рёбра}
+    Кратные рёбра --- несколько рёбер, инцидентных одной и той же паре вершин, т.е. если $e = \{ v_i, v_j \}$ --- встречается несколько раз
+    (если один раз, то ребро называется простым).
+    
+    \subsection{Простой граф}
+    Граф, в котором нет петель и кратных рёбер называется простым.
+
+    \subsection{Степень вершины}
+    \begin{multicols}{2}
+          Дан граф $G = (V, E)$, $v \in V$. Степень вершины ($\deg(v)$) - количество рёбер, выходящих из вершины.
+          \begin{figure}[H]
+              \vspace*{-20pt}
+              \centering
+              \begin{tikzpicture}
+              \SetGraphUnit{1}
+              \Vertex[Math] {v_0}
+              \Vertex[Math, x=3,y=1]{v_1}
+              \Vertex[Math, x=3,y=0]{v_2}
+              \Vertex[Math, x=3,y=-1]{v_3}
+              \Edge[style={-}	](v_0)(v_1)
+              \Edge[style={-}](v_0)(v_2)
+              \Edge[style={-}](v_0)(v_3)
+              \Loop[dist=1.5cm,dir=WE,style={-}](v_0)
+              \tikzset{EdgeStyle/.style = {-,bend right}}
+              \Edge(v_0)(v_3)
+              \end{tikzpicture}
+              \caption*{$\deg(v_0) = 6$ (петля учитывается дважды)}
+            \end{figure}
+    \end{multicols}
+    
+    \subsection{Изолированная вершина}
+    Вершина, степень которой равна $0$ ($\deg(v) = 0$) называется изолированной.
+    
+    \subsection{Висячая вершина}
+    Вершина, степень которой равна $1$ ($\deg(v) = 1$) называется висячей.
+    
+    \subsection{Лемма о рукопожатиях} \label{handsshake}
+    Рассмотрим граф $G = (V, E)$; $|V| = n$, $|E| = m$.
+    \[ \displaystyle\sum_{i=1}^{n} \deg(v_i) = 2m = 2|E| \]
+    то есть сумма степеней вершин любого графа равна удвоенному числу его рёбер. Данное утверждение (и сама формула) известны как лемма
+    о рукопожатиях. Название происходит от известной математической задачи: необходимо доказать,
+    что в любой группе число людей, пожавших руку нечётному числу других чётно.
+    
+    \subsubsection{Пример}
+    \begin{wrapfigure}{r}{6	cm}
+        \vspace*{-1.3cm}
+        \raggedright
+       \begin{tikzpicture}[scale=1]
+        \SetGraphUnit{1}
+        \Vertex[Math] {v_1}
+        \Vertex[Math, x=3,y=1]{v_2}
+        \Vertex[Math, x=3,y=0]{v_3}
+        \Vertex[Math, x=2,y=-1.5]{v_4}
+        \Edge[style={-}, label=$2$](v_1)(v_2)
+        \Edge[style={-}, label=$3$](v_1)(v_3)
+        \Edge[style={-}, label=$4$](v_1)(v_4)
+        \Loop[dist=1.5cm,dir=WE,style={-}, label=$1$, labelstyle={left=1pt}](v_1)
+        \tikzset{EdgeStyle/.style = {-,bend right}}
+        \Edge[label=$5$](v_1)(v_4)
+        \end{tikzpicture}
+    \vspace{-2cm}
+    \end{wrapfigure}
+    $\deg(v_1) = 6$, $\deg(v_2) = 1$, $\deg(v_3) = 1$, $\deg(v_4) =~2$;\\
+    $\displaystyle\sum_{i=1}^{4} \deg(v_i) = 6 + 1 + 1 + 2 = 10 = 2 * 5 = 2 \cdot |E|$.
+    
+    \subsection{Следствие из леммы о рукопожатиях}
+    В любом графе количество нечётных вершин (вершин нечётной степени) всегда чётно.
+    \[ \sum_{i=1}^{n} \deg(v_i) = \smashoperator{\sum_{\deg(V_j)\scriptscriptstyle{\text{ - четн.}}}} \deg(v_j) + \smashoperator{\sum_{\deg(V_k)\scriptscriptstyle{\text{ - нечетн.}}}} \deg(v_k) = 2m.\]
+
+    \subsection{Примеры графов}
+    \subsubsection{Вполне несвязный граф}
+    Вполне несвязный граф (пустой граф, нуль-граф) $G = (V, E)$, где $|V| = n$, $|E| = 0$ --- регулярный граф (опред. \ref{reggraph}) степени 0, то есть граф без рёбер.
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[scale=1]
+        \SetGraphUnit{1}
+        \Vertex[Math] {v_1}
+        \Vertex[Math, x=2,y=0]{v_2}
+        \Vertex[Math, x=2,y=2]{v_3}
+        \Vertex[Math, x=0,y=2]{v_4}
+        \end{tikzpicture}
+    \end{figure}
+    \clearpage
+    
+    \subsubsection{Полный граф}
+    Граф $K_n = (V, E)$ с $|V| = n$ называется полным, если для каждой пары вершин $v_1$, $v_2$, существует ребро, инцидентное $v_1$ и инцидентное $v_2$ (каждая вершина соединена ребром с любой другой вершиной).
+    \[ |E(K_n)| = C_n^2 = \frac{n(n-1)}{2},  \text{ по лемме \ref{handsshake}}\]
+    \begin{figure}[H]
+    \vspace*{-15pt}
+    \centering
+        \begin{tikzpicture}[scale=1.5]
+            \SetGraphUnit{1}
+            \begin{scope}[rotate=18]
+                \Vertices[Lpos=45]{circle}{A, B, C, D, E}
+            \end{scope}
+            \Edges(A,B,A,C,A,D,A,E,B,C,B,D,B,E,D,C,D,E,C,E)
+        \end{tikzpicture}
+        \caption*{$K_5$}
+    \end{figure}
+
+    \subsubsection{Двудольный граф и полный двудольный граф}
+    Двудольный граф (или биграф, или чётный граф) — это граф $G(V,E)$, такой, что множество вершин $V$ разбито на два непересекающихся подмножества $V_1$ и $V_2$, причём всякое ребро $E$ инцидентно вершине из $V_1$ и вершине из $V_2$ (то есть соединяет вершину из $V_1$ с вершиной из $V_2$). Множества $V_1$ и $V_2$ называются <<долями>> двудольного графа. 
+    
+    Полный двудольный граф --- специальный вид двудольного графа, у которого любая вершина первой доли соединена со всеми вершинами второй доли вершин. 
+    \begin{figure}[H]
+        \centering	
+        \begin{tikzpicture}[scale=1.5]
+        \SetGraphUnit{1}
+        \Vertex[Math] {v_1}
+        \Vertex[Math, x=1,y=-1]{v_2}
+        \Vertex[Math, x=2,y=0]{v_3}
+        \Vertex[Math, x=3,y=-1]{v_4}
+        \Vertex[Math, x=4,y=0]{v_5}
+        \Edges(v_4, v_1, v_2, v_3, v_4, v_5, v_2)
+        \draw [decorate,decoration={brace,amplitude=10pt,raise=10pt},yshift=2pt]
+        (0,0) -- (4,0) node [red,midway,xshift=0, yshift=30pt] {Множество $V_1$};
+        
+        \draw [decorate,decoration={brace,amplitude=10pt, mirror, raise=10pt},yshift=-2pt]
+        (1,-1) -- (3,-1) node [red,midway,xshift=0,yshift=-30pt] {Множество $V_2$};
+        \end{tikzpicture}
+        \caption*{Полный двудольный граф $K_{3,2}$}
+    \end{figure}
+
+\clearpage
 \section{Лекция 8}
-
-\subsection{Граф}
-
-$G(V,E)$ --- граф, где $V$ --- множество вершин, $E$ --- множество ребер.
 
 \subsection{Маршрут}
 
@@ -103,7 +291,7 @@ $$ v_0 e_1 v_1 e_2 v_2 \dots v_{k-1} e_k v_k $$
     \path [line] (cep) -- (easy2);
 \end{tikzpicture}
 \end{center}
-\subsection{Регулярный граф}
+\subsection{Регулярный граф} \label{reggraph}
 Граф $G = (V,E)$ -- регулярный, если степени вершин равны $$ \forall v \in V: \deg{v} = e$$
 
 \subsection{Расстояние}
@@ -175,7 +363,7 @@ $G=(V,E)$ -- компонент связности, если он являетс
 $e \in E$ -- мост (перешеек), если после его удаления количество компонентов связности в исходном графе увеличивается.
 
 \subsection{Разделяющая точка}
-$v \subset V$ -- разделяющая точка, если удаление этой точки приводит к увеличению компонентов связности в исходном графе.
+$v \in V$ -- разделяющая точка, если удаление этой точки приводит к увеличению компонентов связности в исходном графе.
 
 \subsection{Изоморфизм графа}
 $G_1=(V_1,E_1),\ G_2=(V_2,E_2)$ -- простые.
